@@ -334,3 +334,5 @@ The next implementation stage is protected-source policy and folder scanning.
 That stage will add editable protected folders/files/process names and hash-only
 learning without storing plaintext secret values. No Gemma setup is required
 until the later local-AI integration stage.
+#   s h i e l d B L u r  
+ 
