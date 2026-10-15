@@ -103,52 +103,73 @@ The repository includes all eight buildathon reproducibility requirements:
 The Dockerfile is intended for Linux/offscreen smoke runs. Native Windows is
 the supported environment for real clipboard protection.
 
-## Start ShieldBlur on Windows 10/11
+## Start ShieldBlur with one command
 
-### Prerequisites
+Prerequisites: Windows 10/11, Python 3.11+ installed with the `py` launcher, and
+a normal interactive desktop session. No administrator access, Gemma key, Ollama
+installation, Tesseract installation, or account is required for Stage 1.
+Python 3.11.2 is the pinned development version in `.python-version`.
 
-- Windows 10 or Windows 11
-- Python 3.11 or newer installed from python.org or another trusted Python
-  distribution
-- A normal interactive Windows desktop session
-- No administrator rights, API key, Ollama installation, or Tesseract
-  installation are needed for Stage 1
+The repository includes a bootstrap launcher. Open PowerShell in the project
+folder and run this single command:
 
-Python 3.11.2 is the repository's pinned development version in `.python-version`.
+```powershell
+.\run.bat
+```
 
-### PowerShell setup
+You can also run the PowerShell launcher directly:
 
-Open PowerShell in the ShieldBlur project folder:
+```powershell
+powershell -ExecutionPolicy Bypass -File .\run.ps1
+```
+
+That command will:
+
+1. Check for Python 3.11+ through the Windows `py` launcher.
+2. Create the project-local `.venv` if it does not exist.
+3. Install the exact versions from `requirements.lock` when the lockfile has
+   changed or dependencies have not been installed yet.
+4. Start ShieldBlur with `python -m app`.
+
+The dependency hash is stored only inside the ignored `.venv` directory, so
+subsequent launches do not reinstall unchanged dependencies. The first launch
+needs internet access only to download the open-source PySide6 wheels. After
+that, the application itself makes no network calls.
+
+### One-command Windows actions
+
+```powershell
+# Start the desktop app
+.\run.bat
+
+# Run the complete offline test suite
+.\run.bat -Mode test
+
+# Run the synthetic clipboard-redaction demo without touching the real clipboard
+.\run.bat -Mode demo
+```
+
+No Gemma key, Ollama installation, Tesseract installation, administrator
+rights, or account is required for any of these Stage 1 commands.
+
+### Manual Windows setup
+
+The launcher is the recommended path. If you prefer to manage the environment
+manually, open PowerShell in the ShieldBlur project folder:
 
 ```powershell
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-```
-
-If PowerShell blocks activation, you can run the environment's interpreter
-without changing execution policy:
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-### Start the app
-
-With the virtual environment active:
-
-```powershell
 python -m app
 ```
 
-Or without activating it:
+If PowerShell activation is blocked, use the environment's interpreter directly:
 
 ```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m app
 ```
-
-The ShieldBlur window should open on the Dashboard. Leave the terminal running
-while using the app. Close the window, or press its `X` button, to stop it.
 
 ### Try the Stage 1 flow
 
@@ -181,6 +202,12 @@ The demo does not touch the system clipboard. It uses only synthetic, fake
 values and prints the input/output transformation:
 
 ```powershell
+.\run.bat -Mode demo
+```
+
+The equivalent direct command after installing dependencies is:
+
+```powershell
 .\.venv\Scripts\python.exe -m demo.redaction_demo
 ```
 
@@ -189,8 +216,14 @@ secret-shaped values replaced with `[REDACTED: ...]` markers.
 
 ## Run tests
 
-The test suite is offline and uses only fake values. From an activated
-virtual environment:
+The test suite is offline and uses only fake values. The recommended single
+command is:
+
+```powershell
+.\run.bat -Mode test
+```
+
+After manually activating the virtual environment, the direct command is:
 
 ```powershell
 python -m unittest discover -s tests -v
@@ -215,18 +248,25 @@ python -m compileall -q app demo tests
 
 ## Linux/headless development
 
-The target is Windows, but the application can be checked on Linux with the
-Qt offscreen backend:
+The target is Windows, but the repository also includes a one-command Linux
+launcher. It creates `.venv`, installs the locked dependencies, and starts the
+offscreen-compatible application:
 
 ```bash
-python3.11 -m venv .venv
-. .venv/bin/activate
-python -m pip install -r requirements.txt
-QT_QPA_PLATFORM=offscreen python -m app
+./run.sh
 ```
 
-The offscreen command verifies startup but cannot provide a normal interactive
-system clipboard or visible desktop window.
+Other Linux launcher modes are:
+
+```bash
+./run.sh test
+./run.sh demo
+```
+
+For a visible Linux desktop, run from the desktop session normally. If no
+display variables are present, `run.sh` selects Qt's offscreen backend. An
+offscreen run verifies startup but cannot provide a normal interactive system
+clipboard or visible desktop window.
 
 ## Technology stack
 
@@ -307,6 +347,9 @@ Shieldbur/
 │   └── test_clipboard_bridge.py
 ├── Dockerfile
 ├── Makefile
+├── run.bat                     # One-command Windows entry point
+├── run.ps1                     # Windows bootstrap/run/test/demo implementation
+├── run.sh                      # One-command Linux bootstrap/run/test/demo
 ├── requirements.txt            # Install entry point
 ├── requirements.lock           # Exact dependency versions
 ├── .env.example                # Non-secret local settings template
