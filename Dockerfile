@@ -17,7 +17,7 @@ RUN apt-get update \
        libxkbcommon-x11-0 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
+COPY requirements.txt requirements.lock ./
 RUN python -m pip install --no-cache-dir --disable-pip-version-check -r requirements.txt
 
 COPY app ./app

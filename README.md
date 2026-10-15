@@ -22,8 +22,9 @@ The current implementation is committed at:
 **No. Stage 1 does not use Gemma, Ollama, Tesseract, or any cloud API.** You do
 not need an API key, account, cloud service, or internet connection at runtime.
 
-The current `requirements.txt` only installs PySide6. The later Gemma stage is
-designed to call Ollama at `http://localhost:11434`, which is a local service;
+The current `requirements.txt` installs only PySide6 from the exact pins in
+`requirements.lock`. The later Gemma stage is designed to call Ollama at
+`http://localhost:11434`, which is a local service;
 that integration is not present yet and would not require a paid API key. An
 Ollama model download would require internet access once, unless the model was
 already available locally, but the model would run on the user's computer.
@@ -82,6 +83,25 @@ protection in the current build:
 
 The Dashboard navigation already includes placeholder pages for these future
 areas so the UI shape is ready for subsequent work.
+
+## Reproducibility checklist
+
+The repository includes all eight buildathon reproducibility requirements:
+
+- [x] Git repository with commits (`git log --oneline`)
+- [x] Dependency lockfile (`requirements.lock` with exact PySide6 pins)
+- [x] Pinned runtime version (`.python-version`, Python 3.11.2)
+- [x] Dockerfile that installs dependencies and runs `python -m app`
+- [x] One offline test command (`python -m unittest discover -s tests -v`; also
+  available as `make test`)
+- [x] README with setup, run, test, privacy, and deployment guidance
+- [x] `.env.example` contains only non-secret local configuration placeholders;
+  `.env` is ignored by Git
+- [x] No machine-specific absolute paths or credentials are stored in tracked
+  source files
+
+The Dockerfile is intended for Linux/offscreen smoke runs. Native Windows is
+the supported environment for real clipboard protection.
 
 ## Start ShieldBlur on Windows 10/11
 
@@ -287,7 +307,9 @@ Shieldbur/
 │   └── test_clipboard_bridge.py
 ├── Dockerfile
 ├── Makefile
-├── requirements.txt
+├── requirements.txt            # Install entry point
+├── requirements.lock           # Exact dependency versions
+├── .env.example                # Non-secret local settings template
 └── .python-version
 ```
 
@@ -334,5 +356,6 @@ The next implementation stage is protected-source policy and folder scanning.
 That stage will add editable protected folders/files/process names and hash-only
 learning without storing plaintext secret values. No Gemma setup is required
 until the later local-AI integration stage.
-#   s h i e l d B L u r  
+#   s h i e l d B L u r 
+ 
  
