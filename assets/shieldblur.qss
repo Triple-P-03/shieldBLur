@@ -1,0 +1,149 @@
+* {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    color: #edf7f7;
+}
+QMainWindow, QWidget#root {
+    background: #111a22;
+}
+QFrame#windowFrame {
+    background: #111a22;
+    border: 1px solid #263640;
+    border-radius: 18px;
+}
+QFrame#titleBar {
+    background: #111a22;
+    border: none;
+}
+QLabel#brand {
+    color: #f5ffff;
+    font-size: 17px;
+    font-weight: 700;
+}
+QLabel#brandMark {
+    color: #42d6c2;
+    font-size: 22px;
+    font-weight: 800;
+}
+QLabel#eyebrow {
+    color: #7f9ba0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+QLabel#pageTitle {
+    color: #f5ffff;
+    font-size: 25px;
+    font-weight: 700;
+}
+QLabel#subtitle, QLabel#muted {
+    color: #8da5aa;
+    font-size: 13px;
+}
+QLabel#sidebarHint {
+    color: #668087;
+    font-size: 11px;
+}
+QFrame#sidebar {
+    background: #16232d;
+    border-radius: 14px;
+}
+QPushButton#navButton {
+    text-align: left;
+    border: none;
+    border-radius: 9px;
+    padding: 11px 13px;
+    color: #91a8ad;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 600;
+}
+QPushButton#navButton:hover {
+    color: #eaffff;
+    background: #1e323a;
+}
+QPushButton#navButton:checked {
+    color: #e9ffff;
+    background: #1d4b4d;
+}
+QPushButton#windowButton {
+    border: none;
+    border-radius: 7px;
+    color: #8da5aa;
+    background: transparent;
+    font-size: 15px;
+}
+QPushButton#windowButton:hover { background: #253741; color: #f5ffff; }
+QFrame#card {
+    background: #182832;
+    border: 1px solid #263a43;
+    border-radius: 14px;
+}
+QFrame#cardAccent {
+    background: #17373a;
+    border: 1px solid #276a68;
+    border-radius: 14px;
+}
+QLabel#cardLabel {
+    color: #8da5aa;
+    font-size: 12px;
+    font-weight: 600;
+}
+QLabel#cardValue {
+    color: #f5ffff;
+    font-size: 28px;
+    font-weight: 700;
+}
+QLabel#cardIcon {
+    color: #42d6c2;
+    font-size: 20px;
+    font-weight: 800;
+}
+QLabel#statusPill {
+    color: #72ead2;
+    background: #153b3a;
+    border: 1px solid #276a68;
+    border-radius: 12px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+QLabel#statusDot { color: #42d6c2; }
+QPushButton#secondaryButton {
+    color: #b4c9cc;
+    background: #21343d;
+    border: 1px solid #304a54;
+    border-radius: 8px;
+    padding: 8px 13px;
+    font-size: 12px;
+    font-weight: 600;
+}
+QPushButton#secondaryButton:hover { background: #29414b; }
+QFrame#toast {
+    background: #183a3b;
+    border: 1px solid #3a8f83;
+    border-radius: 11px;
+}
+QLabel#toastTitle { color: #ecfffc; font-size: 13px; font-weight: 700; }
+QLabel#toastText { color: #9bc8c5; font-size: 11px; }
+QPushButton#toastDetails {
+    color: #72ead2;
+    background: transparent;
+    border: none;
+    font-size: 11px;
+    font-weight: 700;
+}
+QFrame#activityRow {
+    background: #15252e;
+    border: 1px solid #213840;
+    border-radius: 9px;
+}
+QLabel#activityType { color: #dbeeee; font-size: 12px; font-weight: 600; }
+QLabel#activityMeta { color: #769198; font-size: 11px; }
+QLabel#badge {
+    color: #74e6d1;
+    background: #193e3e;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 10px;
+    font-weight: 700;
+}
