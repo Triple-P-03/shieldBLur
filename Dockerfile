@@ -1,7 +1,10 @@
-FROM python:3.11-slim
+FROM python:3.11.2-slim-bookworm
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=0 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1 \
     QT_QPA_PLATFORM=offscreen
 
 WORKDIR /opt/shieldblur
@@ -14,16 +17,17 @@ RUN apt-get update \
        libgl1 \
        libglib2.0-0 \
        libx11-xcb1 \
+       libxkbcommon0 \
        libxkbcommon-x11-0 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt requirements.lock ./
-RUN python -m pip install --no-cache-dir --disable-pip-version-check -r requirements.txt
+COPY requirements.lock ./
+RUN python -m pip install --no-cache-dir --requirement requirements.lock
 
 COPY app ./app
 COPY assets ./assets
 COPY demo ./demo
 COPY tests ./tests
-COPY Makefile README.md .python-version ./
-
-CMD ["python", "-m", "app"]
+# The image is a finite, offscreen smoke-test environment. Start the GUI
+# explicitly on a native desktop; see README.md for the supported commands.
+CMD ["python", "-m", "unittest", "discover", "-s", "tests", "-v"]
