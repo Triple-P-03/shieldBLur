@@ -86,7 +86,7 @@ smoke-test environment:
 - `.python-version` pins the development runtime to Python 3.11.2.
 - `requirements.lock` pins the PySide6 package family to 6.8.2.1.
 - `Makefile` exposes the offline unit-test command on Linux and macOS.
-- `Dockerfile` pins the Python 3.11.2 Bookworm base image, installs the locked
+- `Dockerfile` pins the Python 3.11.2 Bullseye base image by digest, installs the locked
   dependencies, and defaults to a finite offscreen test run.
 - `.dockerignore` excludes local virtual environments, generated files, and
   local environment values from the Docker build context.
